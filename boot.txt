@@ -1,0 +1,580 @@
+2 
+ 
+INDEX 
+ 
+S.No  Title   Page 
+No. 
+1.  Install IDE of Arduino and write a program using Arduino IDE to blink 
+LED.  
+3-6  
+2.  Interface LED and buzzer with Arduino to buzz for a period of time.   6-7 
+3.  Interface RGB LED with Aurdino to obtain different colours and 
+brightness using PWM.  
+7-16 
+4.  a) Control a servo motor using Arduino with an input given through a 
+push button (e.g: When the push button is pressed the servo motor has 
+to rotate by 15 degrees). b) Rotate Stepper motor either clockwise or 
+anti clockwise at ‘n’ number of steps using Arduino.  
+16-21 
+5.  Control any two actuators connected to the Arduino using 
+Bluetooth/Wifi.  
+22-25 
+6.  Interface analog/digital sensors with Arduino and analyse the 
+corresponding readings. (Sensors like temperature, alcohol, humidity, 
+pressure, gas, sound pollution, level, weight, flow, proximity, LDR, PIR, 
+pulse, vibration, sound etc..)  
+26-33 
+7.  Installation and setup of Raspberry Pi.  34-49 
+8.  Interface RGB LED with Raspberry Pi to obtain different colours and 
+brightness using PWM.  
+49-54 
+9.  a) Interface an ultrasonic sensor with Raspberry pi to print distance 
+readings on the monitor when the sensor changes its position. b) 
+Reading the data from an analog sensor with Raspberry using Arduino 
+serial port or ADC MCP3208 using SPI.  
+55-58 
+10.  Post/read the data to/from the cloud via MQTT broker with a 
+Raspberry Pi.  
+59-60 
+11.        Send real-time sensor data to a smartphone using Raspberry Pi onboard 
+Bluetooth  
+61-64 
+12.  Implement an intruder alert system that alerts through email   65-68 3 
+ 
+WEEK-1 
+Install IDE of Arduino and write a program using Arduino IDE to blink LED. 
+ 
+1.  
+AIM: To implement a program to blink LED every second. 
+PROGRAM: 
+void setup(){ 
+    pinMode(8,OUTPUT); 
+} 
+void loop(){ 
+    digitalWrite(8,1); 
+    delay(1000); 
+    digitalWrite(8,0); 
+    delay(1000); 
+} 
+CIRCUIT: 
+ 
+2. 
+AIM: To implement a program to blink 2 LEDs every second alternatively. 
+PROGRAM: 
+void setup(){ 
+    pinMode(8,OUTPUT); 4 
+ 
+    pinMode(9,OUTPUT); 
+} 
+void loop(){ 
+    digitalWrite(8,1); 
+    digitalWrite(9,0); 
+    delay(1000); 
+    digitalWrite(8,0); 
+    digitalWrite(9,1); 
+    delay(1000); 
+} 
+CIRCUIT: 
+ 
+   
+3. 
+AIM: To implement a program to blink 2 LEDs every second alternatively for 10 times. 
+PROGRAM: 
+void setup(){ 
+    pinMode(8,OUTPUT); 
+    pinMode(9,OUTPUT); 
+    int i=0; 
+} 
+void loop(){ 
+    while(i<10){ 
+    digitalWrite(8,1); 
+    digitalWrite(9,0); 
+    delay(1000); 5 
+ 
+    digitalWrite(8,0); 
+    digitalWrite(9,1); 
+    delay(1000); 
+    i++; 
+    } 
+} 
+CIRCUIT: 
+ 
+   
+ 
+4. 
+AIM: To implement a program to change the intensity of LED. 
+PROGRAM: 
+void setup() 
+{ 
+    pinMode(8,OUTPUT); 
+} 
+ 
+void loop() 
+{ 
+    for(int i=0;i<=255;i++) 
+    { 
+        analogWrite(8,i); 
+        delay(100); 
+    } 
+    for(int i=255;i>0;i--) 
+    { 
+        analogWrite(8,i); 
+        delay(100); 
+    } 
+     
+} 6 
+ 
+CIRCUIT: 
+ 
+ 
+WEEK-2 
+ 
+Interface LED and buzzer with Arduino to buzz for a period of time.  
+1. 
+AIM: To implement a program to switch LED and buzzer ON every second. 
+PROGRAM: 
+void setup(){ 
+    pinMode(8,OUTPUT); 
+    pinMode(9,OUTPUT); 
+} 
+void loop(){ 
+    digitalWrite(8,1); 
+    digitalWrite(9,1); 
+    delay(1000); 
+    digitalWrite(8,0); 
+    digitalWrite(9,0); 
+    delay(1000); 
+} 
+ 
+ 
+ 
+ 
+ 
+ 7 
+ 
+CIRCUIT: 
+ 
+    
+ 
+ 
+WEEK-3 
+ 
+Interface RGB LED with Arduino to obtain different colours and brightness using PWM 
+1. 
+AIM: To implement a program to obtain red, blue and green colors of RGB LED with user 
+input. 
+PROGRAM: 
+int c; 
+void setup() { 
+    Serial.begin(9600); 
+    pinMode(10,OUTPUT); 
+    pinMode(8,OUTPUT); 
+    pinMode(9,OUTPUT); 
+} 
+ 
+void loop() 
+{ 
+    c = Serial.parseInt(); 
+    if(c==1) { 
+        digitalWrite(8,1); 
+        digitalWrite(9,0); 
+        digitalWrite(10,0); 
+    } 
+    else if(c==2) { 
+        digitalWrite(9,1); 
+        digitalWrite(8,0); 
+        digitalWrite(10,0); 8 
+ 
+    } 
+    else if(c==3) { 
+        digitalWrite(10,1); 
+        digitalWrite(8,0); 
+        digitalWrite(9,0); 
+    } 
+    Serial.println(c); 
+} 
+ 
+ 
+ 
+CIRCUIT:  
+ 
+    
+ 9 
+ 
+2. 
+AIM: To implement a program to obtain different colors from RGB LED through user input. 
+PROGRAM: 
+String color = ""; 
+void setup() 
+{ 
+    Serial.begin(9600); 
+    pinMode(9,OUTPUT); 
+    pinMode(10,OUTPUT); 
+    pinMode(11,OUTPUT); 
+} 
+void loop() 
+{ 
+    color = Serial.readString(); 
+    color.trim(); 
+ 
+    if(color == "red" || color == "RED") { 
+        rgb(255,0,0); 
+    } 
+    if(color == "green" || color == "GREEN") { 
+        rgb(0,0,255); 
+    } 
+    if(color == "blue" || color == "BLUE") { 
+        rgb(0,255,0); 
+    } 
+    if(color == "yellow" || color == "YELLOW") { 
+        rgb(255,0,255); 
+    } 
+    if(color == "cyan" || color == "CYAN") { 
+        rgb(0,255,255); 
+    } 
+    if(color == "magenta" || color == "MAGENTA") { 
+        rgb(255,255,0); 
+    } 
+    if(color == "purple" || color == "PURPLE") { 
+        rgb(128,128,0); 
+    } 
+    if(color == "navyblue" || color == "NAVYBLUE") { 
+        rgb(0,128,0); 
+    } 
+    if(color == "brown" || color == "BROWN") { 
+        rgb(165,42,42); 
+    } 
+    if(color == "sage" || color == "SAGE") { 
+        rgb(178,136,172); 10 
+ 
+    } 
+} 
+ 
+void rgb(int x, int y, int z) 
+{ 
+    analogWrite(9,x); 
+    analogWrite(10,y); 
+    analogWrite(11,z); 
+} 
+ 
+CIRCUIT: 
+ 
+    
+ 11 
+ 
+ 
+3. 
+AIM: To implement a program to change the intensity of RGB LED. 
+PROGRAM: 
+void setup() 
+{ 
+    pinMode(9,OUTPUT); 
+    pinMode(10,OUTPUT); 
+    pinMode(11,OUTPUT); 
+ 
+} 
+ 
+ 
+void loop() 
+{ 
+   for(int i = 0; i <=255; i++) 
+   { 
+    analogWrite(9,i); 
+    analogWrite(10,i); 
+    analogWrite(11,i); 
+    delay(100); 
+   } 
+   for(int i = 255; i >=0; i--) 
+   { 
+    analogWrite(9,i); 
+    analogWrite(10,i); 
+    analogWrite(11,i); 
+    delay(100); 
+   } 
+    
+} 
+CIRCUIT: 
+ 12 
+ 
+4. 
+AIM: To implement a program to increase the intensity of RGB LED. 
+PROGRAM: 
+void setup(){} 
+void loop() 
+{ 
+    for(i=0;i<=255;i++) 
+    { 
+        for(j=0;j<=255;j++) 
+        { 
+            for(k=0;k<=255;k++) 
+            { 
+                RGB(i,j,k); 
+                delay(100); 
+            } 
+        } 
+    } 
+} 
+void RGB(int R, int G, int B) 
+{ 
+    analogWrite(9, R); 
+    analogWrite(10,G); 
+    analogWrite(11,B); 
+} 
+ 
+CIRCUIT: 
+ 
+ 13 
+ 
+ 
+5. 
+AIM: To implement a program to first increase the intensity of RGB LED in the order - 
+green, red and blue. 
+ 
+PROGRAM: 
+int i; 
+void setup() {} 
+void loop() 
+{ 
+    for(int i=0;i<=255;i++) 
+    { 
+        RGB(0,i,0); 
+        delay(100); 
+    } 
+    for(int i=0;i<=255;i++) 
+    { 
+        RGB(i,0,0); 
+        delay(100); 
+    } 
+    for(int i=0;i<=255;i++) 
+    { 
+        RGB(0,0,i); 
+        delay(100); 
+    } 
+} 
+ 
+void RGB() 
+{ 
+    analogWrite(9,R); 
+    analogWrite(10,G); 
+    analogWrite(11,B); 
+} 
+ 
+ 
+ 
+ 
+ 
+ 
+ 14 
+ 
+CIRCUIT: 
+    
+ 
+ 
+6. 
+AIM: To implement a program to switch ON any one of the 4 LEDs 
+PROGRAM: 
+int c; 
+void setup(){ 
+    Serial.begin(9600); 
+    pinMode(8,OUTPUT); 
+    pinMode(9,OUTPUT); 
+    pinMode(10,OUTPUT); 
+    pinMode(11,OUTPUT); 15 
+ 
+} 
+void loop(){ 
+    c=Serial.parseInt(); 
+    if(c==1){ 
+        digitalWrite(8,1); 
+        digitalWrite(9,0); 
+        digitalWrite(10,0); 
+        digitalWrite(11,0);  
+    } 
+    else if(c==2){ 
+        digitalWrite(8,0); 
+        digitalWrite(9,1); 
+        digitalWrite(10,0); 
+        digitalWrite(11,0);  
+    } 
+    else if(c==3){ 
+        digitalWrite(8,0); 
+        digitalWrite(9,0); 
+        digitalWrite(10,1); 
+        digitalWrite(11,0);  
+    } 
+    else if(c==4){ 
+        digitalWrite(8,0); 
+        digitalWrite(9,0); 
+        digitalWrite(10,0); 
+        digitalWrite(11,1);  
+    } 
+} 
+ 
+ 
+ 
+ 
+ 
+ 
+ 16 
+ 
+CIRCUIT: 
+       
+      
+ 
+WEEK-4 
+a) Control a servo motor using Arduino with an input given through a push button (e.g: When 
+the push button is pressed the servo motor has to rotate by 15 degrees). b) Rotate Stepper 
+motor either clockwise or anti clockwise at ‘n’ number of steps using Arduino. 
+ 
+1. 
+AIM: To implement a program to rotate servo motor 90 0  for every 500ms. 
+PROGRAM: 
+#include<Servo.h> 
+Servo s1; 
+int servopin=8; 17 
+ 
+void setup(){ 
+    s1.attach(servopin); 
+} 
+void loop(){ 
+    s1.write(90); 
+    delay(500); 
+}  
+ 
+ 
+CIRCUIT: 
+ 
+ 
+ 
+2. 
+AIM: To implement a program to rotate servo motor 180 0  in clockwise direction. 
+PROGRAM: 
+#include<Servo.h> 
+Servo s1; 
+int servopin=8; 
+void setup(){ 
+    s1.attach(servopin); 
+} 
+void loop(){ 
+    for(i=0;i<=180;i+=45){ 
+    s1.write(i); 
+    delay(500); 18 
+ 
+    } 
+}  
+ 
+CIRCUIT: 
+ 
+    
+ 
+ 
+ 
+3. 
+AIM: To implement a program to rotating servo motor 180 0  in anti-clockwise direction. 
+PROGRAM: 
+#include<Servo.h> 
+Servo s1; 
+int servopin=8; 
+void setup(){ 
+    s1.attach(servopin); 
+} 19 
+ 
+void loop(){ 
+for(i=180;i>=0;i--){ 
+    s1.write(i); 
+    delay(500);   
+    } 
+}  
+ 
+CIRCUIT: 
+ 
+ 
+ 
+4.  
+AIM: To implement a program to rotate stepper motor 360 0  in clockwise and then in anti-
+clockwise direction. 
+PROGRAM: 
+#include<Stepper.h> 
+int steps_per_rev=32; 
+int gear_reduction=64; 
+int steps_req=gear_reduction*steps_per_rev; 
+Stepper motor(steps_per_rev,2,4,3,5); 
+void setup(){ 
+    Serial.begin(9600); 
+} 
+void loop(){ 
+    Serial.println(steps_req); 20 
+ 
+    motor.setSpeed(900); 
+    motor.step(steps_req); 
+    delay(1000); 
+    Serial.println(steps_req); 
+    motor.setSpeed(900); 
+    motor.step(-steps_req); 
+    delay(1000); 
+}  
+ 
+CIRCUIT: 
+ 
+ 
+ 
+5. 
+AIM: To implement a program to rotate stepper motor 180 0  in clockwise and then 90 0  in anti-
+clockwise direction. 
+PROGRAM: 
+#include<Stepper.h> 
+int steps_per_rev=32; 
+int gear_reduction=64; 
+int steps_req=gear_reduction*steps_per_rev; 
+Stepper motor(steps_per_rev,2,4,3,5); 
+void setup(){ 
+    Serial.begin(9600); 
+} 
+void loop(){ 21 
+ 
+    Serial.println(steps_req); 
+    motor.setSpeed(900); 
+    motor.step(steps_req/2); 
+    delay(1000); 
+    Serial.println(steps_req); 
+    motor.setSpeed(900); 
+    motor.step(-steps_req/4); 
+    delay(1000); 
+} 
+ 
+CIRCUIT: 
+ 
+ 
+ 
+ 
+ 22 
+ 
+WEEK-5 
+ 
+Control any two actuators connected to the Arduino using Bluetooth/Wifi. 
+1. 
+AIM: To implement a program to send and receive messages using Bluetooth module with 
+Arduino. 
+PROGRAM: 
+#include <SoftwareSerial.h> 
+SoftwareSerial EEBLUE(10,11); 
+void setup() 
+{ 
+    Serial.begin(9600); 
+    EEBLUE.begin(9600); 
+    Serial.println("Bluetooth is ready "); 
+} 
+void loop() 
+{ 
+    if(EEBLUE.available()) 
+    Serial.write(EEBLUE.read()); 
+    if(Serial.available()) 
+    EEBLUE.write(Serial.read()); 
+} 
+ 
+OUTPUT: 
+ 
+ 
+ 
+ 23 
+ 
