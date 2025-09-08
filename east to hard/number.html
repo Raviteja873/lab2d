@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number to Words</title>
+  <script>
+    const ones=["zero","one","two","three","four","five","six","seven","eight","nine"];
+    const teens=["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+    const tens=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+    function toWords(n){
+      if(n<10)return ones[n];
+      if(n<20)return teens[n-10];
+      if(n<100)return tens[Math.floor(n/10)]+(n%10?" "+ones[n%10]:"");
+      let h=Math.floor(n/100),r=n%100;
+      return ones[h]+" hundred"+(r?" "+toWords(r):"");
+    }
+    function showWords(){
+      let v=document.getElementById("num").value.trim();
+      let o=document.getElementById("out");
+      if(!/^\d+$/.test(v)){o.value="not a number";return;}
+      let n=parseInt(v);
+      if(n<0||n>999){o.value="out of range";return;}
+      o.value=toWords(n);
+    }
+  </script>
+</head>
+<body>
+  <h2>Number to Words</h2>
+  <input id="num" placeholder="0-999">
+  <button onclick="showWords()">Convert</button><br><br>
+  <input id="out" readonly>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries and Capitals</title>
+    <style>
+        #capital {
+            font-weight: bold;
+            color: blue;
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        function showcapitals() {
+            let country = document.getElementById("country").value;
+            let capital = "";
+
+            if (country == "india") capital = "new delhi";
+            else if (country == "usa") capital = "washington D.C";
+            else if (country == "uk") capital = "london";
+            else if (country == "france") capital = "paris";
+            else if (country == "japan") capital = "tokyo";
+
+            document.getElementById("capital").innerText = capital;
+        }
+    </script>
+</head>
+<body>
+    <h2>Select a Country</h2>
+    <select id="country" onchange="showcapitals()">
+        <option value="">---choose a country---</option>
+        <option>india</option>
+        <option>usa</option>
+        <option>uk</option>
+        <option>france</option>
+        <option>japan</option>
+    </select>
+    <h3>Capital</h3>
+    <p id="capital"></p>
+</body>
+</html>
